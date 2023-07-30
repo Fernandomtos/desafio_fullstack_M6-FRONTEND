@@ -35,7 +35,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   body {
-    background-color: var(--grey-4);
+    background-color: var(--grey-2);
     width: 100vw;
     height: 100vh;
     font-family: "Inter", sans-serif;
@@ -52,12 +52,17 @@ export const GlobalStyle = createGlobalStyle`
         height: 250px;
       }
     }
+
+    .boxLoading {
+      position: absolute;
+      right: 45%;
+      top: 20%;
+    }
   }
 
   label {
     font-size: var(--headline);
     color: var(--grey-0);
-    /* margin-bottom: 22.33px; */
   }
   
   button {
