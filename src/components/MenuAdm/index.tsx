@@ -5,13 +5,12 @@ import { ContactContext } from "../../providers/ContactContext/ContactContext";
 import { useNavigate } from "react-router-dom";
 
 export const MenuAdm = () => {
-  const { contactsAllUsers, contactsUser } = useContext(ContactContext);
+  const { contactsAllUsers } = useContext(ContactContext);
   const navigate = useNavigate();
 
   return (
     <StyledDiv>
       <span>Controle de Administrador</span>
-      <StyledBtn onClick={() => contactsUser()}>Listar Meus Contatos</StyledBtn>
       <StyledBtn onClick={() => contactsAllUsers()}>
         Listar Todos Contatos
       </StyledBtn>

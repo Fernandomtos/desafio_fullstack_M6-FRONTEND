@@ -1,9 +1,10 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import {
   iContact,
   iContactContext,
   iContactContextProps,
   iContactUserCommon,
+  iSearchForm,
 } from "./@types";
 import api from "../../services/api";
 import { UserContext } from "../UserContext/UserContext";
@@ -13,8 +14,21 @@ export const ContactContext = createContext({} as iContactContext);
 
 const ContactProvider = ({ children }: iContactContextProps) => {
   const [contactModal, setContactModal] = useState(false);
-  const [contactUser, setContactUser] = useState<iContact[] | null>([]);
+
+  const [contactUser, setContactUser] = useState<iContact[] | null>(null);
+
   const { userData } = useContext(UserContext);
+  const [search, setSearch] = useState<iSearchForm>();
+
+  const searchContact = contactUser?.filter((contact) => {
+    return search === undefined
+      ? true
+      : contact.name.toLowerCase().includes(search.name.toLocaleLowerCase());
+  });
+
+  useEffect(() => {
+    setSearch(undefined);
+  }, [contactUser]);
 
   //lista todos contatos (admin)
   const contactsAllUsers = async () => {
@@ -30,7 +44,7 @@ const ContactProvider = ({ children }: iContactContextProps) => {
   const contactsUser = async () => {
     try {
       const response = await api.get<iContactUserCommon>(
-        `/contacts/users/${userData?.id}`
+        `/contacts/users/${userData?.sub}`
       );
 
       const { contacts } = response.data;
@@ -61,6 +75,8 @@ const ContactProvider = ({ children }: iContactContextProps) => {
         contactModal,
         setContactModal,
         createContacts,
+        searchContact,
+        setSearch,
       }}
     >
       {children}

@@ -10,15 +10,10 @@ export const StyledDiv = styled.div`
   flex-direction: column;
   background-color: var(--grey-3);
   border-radius: 4px;
-  position: relative;
 
   form {
     width: 100%;
     height: auto;
-
-    button {
-      margin-top: 40px;
-    }
   }
 
   h2 {
@@ -28,35 +23,8 @@ export const StyledDiv = styled.div`
     margin-bottom: 17.65px;
   }
 
-  .inputPassword {
-    display: flex;
-    align-items: center;
-    position: relative;
-
-    img {
-      width: 14px;
-      height: 22px;
-      position: absolute;
-      top: 50px;
-      right: 18px;
-    }
-  }
-
-  span {
-    color: var(--grey-1);
-    font-size: var(--headlineBold);
-    display: flex;
-    justify-content: center;
-    margin-top: 27.27px;
-    margin-bottom: 17.65px;
-  }
-
-  @media (min-width: 769px) {
-    .inputPassword {
-      img {
-        top: 60px;
-      }
-    }
+  button {
+    margin-top: 30px;
   }
 `;
 
@@ -80,10 +48,10 @@ export const StyledDivInput = styled.div`
     min-height: 38.5px;
     border-radius: 3.21px;
     background-color: var(--grey-2);
+    border: 2px groove var(--grey-2);
     padding-left: 16.24px;
     color: var(--grey-0);
     font-size: var(--headline);
-    border: none;
 
     :focus {
       border: 0.98px solid var(--grey-0);
@@ -95,13 +63,4 @@ export const StyledDivInput = styled.div`
       min-height: 48px;
     }
   }
-`;
-
-export const StyledBtnPassword = styled.button`
-  background-color: transparent;
-  color: var(--grey-1);
-  font-size: var(--headlineBold);
-  position: absolute;
-  top: 265px;
-  right: 18px;
 `;

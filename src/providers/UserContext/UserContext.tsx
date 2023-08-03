@@ -1,9 +1,10 @@
 import { createContext, useEffect, useState } from "react";
 import {
   errorResponse,
-  iUser,
   iUserContext,
   iUserContextProps,
+  iUserDataToken,
+  iUserMail,
 } from "./@types";
 import { LoginData } from "../../components/FormLogin/validator";
 import api from "../../services/api";
@@ -11,12 +12,15 @@ import { useNavigate } from "react-router-dom";
 import { TRegisterDataResponse } from "../../components/FormRegister/validator";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
+import jwt_decode from "jwt-decode";
 
 export const UserContext = createContext({} as iUserContext);
 
 const UserProvider = ({ children }: iUserContextProps) => {
   const [loading, setLoading] = useState(true);
-  const [userData, setUSerData] = useState<iUser | null>(null);
+  const [userData, setUserData] = useState<iUserDataToken | null>(null);
+  const [btnInfo, setBtnInfo] = useState("");
+  const [recoverModal, setRecoverModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,6 +32,7 @@ const UserProvider = ({ children }: iUserContextProps) => {
     }
 
     api.defaults.headers.common.Authorization = `Bearer ${token}`;
+    setUserData(jwt_decode(token));
     setLoading(false);
   }, []);
 
@@ -37,9 +42,11 @@ const UserProvider = ({ children }: iUserContextProps) => {
       const { token } = response.data;
 
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
+
       localStorage.setItem("desafioM6:token", token);
       setLoading(false);
-      setUSerData(response.data.userData);
+      setUserData(jwt_decode(token));
+      toast.success("Login realizado com sucesso!");
       navigate("dashboard");
     } catch (error) {
       toast.error("E-mail ou senha inválido(s)!");
@@ -67,6 +74,18 @@ const UserProvider = ({ children }: iUserContextProps) => {
     navigate("/");
   };
 
+  const recoverPassword = async (data: iUserMail) => {
+    try {
+      await api.post("/recoverPass", data);
+      navigate("/");
+      toast.success("Senha enviado por e-mail!");
+    } catch (error) {
+      const currentError = error as AxiosError<errorResponse>;
+      toast.error(currentError.response?.data.message);
+      console.log(error);
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -76,6 +95,11 @@ const UserProvider = ({ children }: iUserContextProps) => {
         logoutUser,
         userData,
         setLoading,
+        btnInfo,
+        setBtnInfo,
+        recoverPassword,
+        recoverModal,
+        setRecoverModal,
       }}
     >
       {children}

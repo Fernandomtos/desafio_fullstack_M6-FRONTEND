@@ -10,6 +10,10 @@ export interface iUserLoginForm {
   password: string;
 }
 
+export interface iUserMail {
+  email: string;
+}
+
 export interface iUser {
   id: number;
   name: string;
@@ -18,6 +22,14 @@ export interface iUser {
   fone: string;
   createdAt: string;
   deletedAt: string;
+}
+
+export interface iUserDataToken {
+  admin: boolean;
+  exp: number;
+  iat: number;
+  name: string;
+  sub: number; // id do user.
 }
 
 export interface errorResponse {
@@ -29,6 +41,11 @@ export interface iUserContext {
   loading: boolean;
   createUser: (data: TRegisterDataResponse) => Promise<void>;
   logoutUser: () => void;
-  userData: iUser | null;
+  userData: iUserDataToken | null;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  btnInfo: string;
+  setBtnInfo: React.Dispatch<React.SetStateAction<string>>;
+  recoverPassword: (data: iUserMail) => Promise<void>;
+  recoverModal: boolean;
+  setRecoverModal: React.Dispatch<React.SetStateAction<boolean>>;
 }

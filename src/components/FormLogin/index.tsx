@@ -3,12 +3,13 @@ import schema, { LoginData } from "./validator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
 import { UserContext } from "../../providers/UserContext/UserContext";
-import { StyledDiv, StyledDivInput } from "./styles";
+import { StyledBtnPassword, StyledDiv, StyledDivInput } from "./styles";
 import { BtnSubmit } from "../BtnSubmit";
 import { BtnSignup } from "../BtnSignup";
 
 const FormLogin = () => {
-  const { userLogin } = useContext(UserContext);
+  const { userLogin, setBtnInfo, setRecoverModal, recoverModal } =
+    useContext(UserContext);
 
   const { register, handleSubmit } = useForm<LoginData>({
     resolver: zodResolver(schema),
@@ -44,9 +45,18 @@ const FormLogin = () => {
           </StyledDivInput>
 
           <BtnSubmit>Entrar</BtnSubmit>
+
           <span>Ainda não possui uma conta?</span>
           <BtnSignup />
         </form>
+        <StyledBtnPassword
+          onClick={() => {
+            setBtnInfo("recuperarSenha");
+            setRecoverModal(!recoverModal);
+          }}
+        >
+          Esqueci minha senha
+        </StyledBtnPassword>
       </StyledDiv>
     </>
   );
