@@ -10,7 +10,7 @@ import { ModalContact } from "../../components/ModalContact";
 import { MenuAdm } from "../../components/MenuAdm";
 
 const Dashboard = () => {
-  const { contactUser, contactsUser, contactModal } =
+  const { searchContact, contactsUser, contactModal } =
     useContext(ContactContext);
   const { userData } = useContext(UserContext);
 
@@ -45,7 +45,10 @@ const Dashboard = () => {
           </aside>
           <section>
             <StyledCardsUl>
-              {contactUser?.map((contact) => (
+              {searchContact?.length == 0 ? (
+                <h2>Contato não encontrado...</h2>
+              ) : null}
+              {searchContact?.map((contact) => (
                 <CardContact key={contact.id} contact={contact} />
               ))}
             </StyledCardsUl>

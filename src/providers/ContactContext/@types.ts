@@ -20,6 +20,10 @@ export interface iContactUserCommon {
   // contacts: iContactUser[] | null;
 }
 
+export interface iSearchForm {
+  name: string;
+}
+
 export interface iContactContext {
   contactsAllUsers: () => Promise<void>;
   contactsUser: () => Promise<void>;
@@ -29,4 +33,6 @@ export interface iContactContext {
   contactModal: boolean;
   setContactModal: React.Dispatch<React.SetStateAction<boolean>>;
   createContacts: (data: iContact) => Promise<void>;
+  searchContact: iContact[] | undefined;
+  setSearch: React.Dispatch<React.SetStateAction<iSearchForm | undefined>>;
 }

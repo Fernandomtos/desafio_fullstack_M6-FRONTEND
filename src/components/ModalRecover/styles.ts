@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { AnimationFadeIn } from "../../styles/animations";
 
-export const StyledContactModalBox = styled.div`
+export const StyledRecoverModalBox = styled.div`
   position: fixed;
   display: flex;
   align-items: center;
