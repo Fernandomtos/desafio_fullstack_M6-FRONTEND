@@ -3,6 +3,7 @@ import {
   iContact,
   iContactContext,
   iContactContextProps,
+  iContactUpdate,
   iContactUserCommon,
   iSearchForm,
 } from "./@types";
@@ -14,11 +15,10 @@ export const ContactContext = createContext({} as iContactContext);
 
 const ContactProvider = ({ children }: iContactContextProps) => {
   const [contactModal, setContactModal] = useState(false);
-
   const [contactUser, setContactUser] = useState<iContact[] | null>(null);
-
   const { userData } = useContext(UserContext);
   const [search, setSearch] = useState<iSearchForm>();
+  const [contactId, setContactId] = useState(0);
 
   const searchContact = contactUser?.filter((contact) => {
     return search === undefined
@@ -57,8 +57,31 @@ const ContactProvider = ({ children }: iContactContextProps) => {
   //criar contatos
   const createContacts = async (data: iContact) => {
     try {
-      await api.post<iContact>(`/contacts`, data);
+      await api.post<iContact>("/contacts", data);
       toast.success("Registro criado com sucesso!");
+      setContactModal(!contactModal);
+      contactsUser();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //deletar contato;
+  const deleteContacts = async (id: number) => {
+    try {
+      await api.delete(`/contacts/${id}`);
+      toast.success("Contato deletado com sucesso!");
+      contactsUser();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //atualizar contato;
+  const updateContacts = async (data: iContactUpdate) => {
+    try {
+      await api.patch<iContact>(`/contacts/${contactId}`, data);
+      toast.success("Contato atualizado com sucesso!");
       setContactModal(!contactModal);
       contactsUser();
     } catch (error) {
@@ -77,6 +100,10 @@ const ContactProvider = ({ children }: iContactContextProps) => {
         createContacts,
         searchContact,
         setSearch,
+        deleteContacts,
+        updateContacts,
+        contactId,
+        setContactId,
       }}
     >
       {children}

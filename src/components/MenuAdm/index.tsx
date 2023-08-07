@@ -3,9 +3,11 @@ import { StyledBtn } from "../BtnLogoutOrBack/styles";
 import { StyledDiv } from "./sytes";
 import { ContactContext } from "../../providers/ContactContext/ContactContext";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../providers/UserContext/UserContext";
 
 export const MenuAdm = () => {
   const { contactsAllUsers } = useContext(ContactContext);
+  const { setBtnInfo, allUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   return (
@@ -17,10 +19,15 @@ export const MenuAdm = () => {
       <StyledBtn onClick={() => navigate("/register")}>
         Cadastrar Usuário
       </StyledBtn>
-      <StyledBtn>Listar Todos</StyledBtn>
+      <StyledBtn
+        onClick={() => {
+          setBtnInfo("listarUsuarios");
+          allUser();
+        }}
+      >
+        Listar Todos Usuários
+      </StyledBtn>
       <StyledBtn>Encontrar Usuário</StyledBtn>
-      <StyledBtn>Atualizar</StyledBtn>
-      <StyledBtn>Deletar</StyledBtn>
     </StyledDiv>
   );
 };

@@ -1,37 +1,38 @@
 import { useContext } from "react";
-import { iContact } from "../../providers/ContactContext/@types";
 import { SyledCard } from "./styles";
 import { BsTrash } from "react-icons/bs";
 import { FaUserEdit } from "react-icons/fa";
 import { ContactContext } from "../../providers/ContactContext/ContactContext";
 import { UserContext } from "../../providers/UserContext/UserContext";
+import { iUser } from "../../providers/UserContext/@types";
 
-interface iContactProps {
-  contact: iContact;
+interface iUserProps {
+  user: iUser;
 }
 
-export const CardContact = ({ contact }: iContactProps) => {
-  const { deleteContacts, contactModal, setContactModal, setContactId } =
-    useContext(ContactContext);
-  const { setBtnInfo } = useContext(UserContext);
+export const CardUsers = ({ user }: iUserProps) => {
+  const { contactModal, setContactModal } = useContext(ContactContext);
+  const { setBtnInfo, deleteUser, setUserId } = useContext(UserContext);
 
-  const id: number = contact.id!;
+  const idUser: number = user.id!;
 
   return (
     <SyledCard>
-      <img src="/img/icon_user.png" alt="imagem contato" />
-      <p>ref. {contact.id}</p>
-      <h2>Nome: {contact.name}</h2>
-      <p>E-mail: {contact.email}</p>
-      <p>Telefone: {contact.fone}</p>
+      <p>ref. {user.id}</p>
+      <h2>Nome: {user.name}</h2>
+      <p>E-mail: {user.email}</p>
+      <p>Telefone: {user.fone}</p>
+      <p>Criado em: {user.createdAt}</p>
+      <p>Deletado em: {user.deletedAt} </p>
+      <p>Usuário Admin: {user.admin}</p>
       <div className="btnContact">
-        <button onClick={() => deleteContacts(id)}>
+        <button onClick={() => deleteUser(idUser)}>
           <BsTrash size={25} />
         </button>
         <button
           onClick={() => {
             setBtnInfo("atualizacaoContato");
-            setContactId(id);
+            setUserId(idUser);
             setContactModal(!contactModal);
           }}
         >

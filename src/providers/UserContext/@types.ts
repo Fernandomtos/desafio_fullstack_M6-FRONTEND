@@ -24,6 +24,13 @@ export interface iUser {
   deletedAt: string;
 }
 
+export interface iUserUpdate {
+  name?: string;
+  email?: string;
+  fone?: string;
+  password?: string;
+}
+
 export interface iUserDataToken {
   admin: boolean;
   exp: number;
@@ -48,4 +55,11 @@ export interface iUserContext {
   recoverPassword: (data: iUserMail) => Promise<void>;
   recoverModal: boolean;
   setRecoverModal: React.Dispatch<React.SetStateAction<boolean>>;
+  deleteUser: (idUser: number) => Promise<void>;
+  updateUser: (data: iUserUpdate, idUser: number) => Promise<void>;
+  setUserData: React.Dispatch<React.SetStateAction<iUserDataToken | null>>;
+  listUsers: iUser[] | null;
+  allUser: () => Promise<void>;
+  userId: number;
+  setUserId: React.Dispatch<React.SetStateAction<number>>;
 }

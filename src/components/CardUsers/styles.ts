@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const SyledCard = styled.div`
-  width: 280px;
-  height: 250px;
+  width: 350px;
+  height: 350px;
   background-color: var(--grey-1);
   border: 2px groove var(--grey-4);
   border-radius: 8px;

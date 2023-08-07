@@ -8,11 +8,12 @@ import Footer from "../../components/Footer";
 import { CardContact } from "../../components/CardContact";
 import { ModalContact } from "../../components/ModalContact";
 import { MenuAdm } from "../../components/MenuAdm";
+import { CardUsers } from "../../components/CardUsers";
 
 const Dashboard = () => {
   const { searchContact, contactsUser, contactModal } =
     useContext(ContactContext);
-  const { userData } = useContext(UserContext);
+  const { userData, btnInfo, listUsers } = useContext(UserContext);
 
   useEffect(() => {
     contactsUser();
@@ -44,14 +45,22 @@ const Dashboard = () => {
             {userData?.admin === true ? <MenuAdm /> : null}
           </aside>
           <section>
-            <StyledCardsUl>
-              {searchContact?.length == 0 ? (
-                <h2>Contato não encontrado...</h2>
-              ) : null}
-              {searchContact?.map((contact) => (
-                <CardContact key={contact.id} contact={contact} />
-              ))}
-            </StyledCardsUl>
+            {btnInfo == "listarUsuarios" ? (
+              <StyledCardsUl>
+                {listUsers?.map((user) => (
+                  <CardUsers key={user.id} user={user} />
+                ))}
+              </StyledCardsUl>
+            ) : (
+              <StyledCardsUl>
+                {searchContact?.length == 0 ? (
+                  <h2>Contato não encontrado...</h2>
+                ) : null}
+                {searchContact?.map((contact) => (
+                  <CardContact key={contact.id} contact={contact} />
+                ))}
+              </StyledCardsUl>
+            )}
           </section>
         </div>
       </StyledContainer>
