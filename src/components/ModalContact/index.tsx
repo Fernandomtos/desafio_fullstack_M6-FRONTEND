@@ -19,6 +19,7 @@ export const ModalContact = () => {
       {btnInfo === "atualizacaoContato" ? <FormContactUpdate /> : null}
       {btnInfo === "deletarConta" ? <FormDeleteUser /> : null}
       {btnInfo === "editarPerfil" ? <FormUserUpdate /> : null}
+      {btnInfo === "editarUser" ? <FormUserUpdate /> : null}
     </StyledContactModalBox>
   );
 };

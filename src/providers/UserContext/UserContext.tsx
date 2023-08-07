@@ -104,6 +104,7 @@ const UserProvider = ({ children }: iUserContextProps) => {
         logoutUser();
       }
     } catch (error) {
+      toast.warning("Não é possível atualizar Usuário deletado!");
       console.log(error);
     }
   };
