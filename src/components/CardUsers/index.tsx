@@ -31,7 +31,7 @@ export const CardUsers = ({ user }: iUserProps) => {
         </button>
         <button
           onClick={() => {
-            setBtnInfo("atualizacaoContato");
+            setBtnInfo("editarUser");
             setUserId(idUser);
             setContactModal(!contactModal);
           }}

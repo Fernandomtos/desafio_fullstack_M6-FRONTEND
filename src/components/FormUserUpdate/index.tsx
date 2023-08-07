@@ -11,7 +11,7 @@ import { UserContext } from "../../providers/UserContext/UserContext";
 
 export const FormUserUpdate = () => {
   const { contactModal, setContactModal } = useContext(ContactContext);
-  const { updateUser, userData } = useContext(UserContext);
+  const { updateUser, userData, userId } = useContext(UserContext);
   const { btnInfo } = useContext(UserContext);
 
   let idUser: number | undefined = 0;
@@ -19,8 +19,10 @@ export const FormUserUpdate = () => {
   if (btnInfo == "editarPerfil") {
     idUser = userData?.sub;
   } else {
-    idUser = 0;
+    idUser = userId;
   }
+
+  console.log(idUser);
 
   const {
     register,
