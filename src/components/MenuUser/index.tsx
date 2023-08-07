@@ -11,8 +11,13 @@ export interface iFormData {
 }
 
 export const MenuUser = () => {
-  const { contactsUser, setContactModal, contactModal, searchContact } =
-    useContext(ContactContext);
+  const {
+    contactsUser,
+    setContactModal,
+    contactModal,
+    searchContact,
+    setSearch,
+  } = useContext(ContactContext);
   const { setBtnInfo } = useContext(UserContext);
 
   const { register, handleSubmit } = useForm<iFormData>();
@@ -22,7 +27,7 @@ export const MenuUser = () => {
       return contact.id == data.id;
     });
 
-    console.log(findContactId);
+    setSearch(findContactId);
   };
 
   return (
@@ -57,10 +62,31 @@ export const MenuUser = () => {
         Encontrar Contato
       </StyledBtn>
 
-      <StyledBtn onClick={() => contactsUser()}>Listar Meus Contatos</StyledBtn>
+      <StyledBtn
+        onClick={() => {
+          setBtnInfo("");
+          contactsUser();
+        }}
+      >
+        Listar Meus Contatos
+      </StyledBtn>
       <span>Controle de Perfil</span>
-      <StyledBtn>Editar Perfil</StyledBtn>
-      <StyledBtn>Deletar</StyledBtn>
+      <StyledBtn
+        onClick={() => {
+          setBtnInfo("editarPerfil");
+          setContactModal(!contactModal);
+        }}
+      >
+        Editar Perfil
+      </StyledBtn>
+      <StyledBtn
+        onClick={() => {
+          setBtnInfo("deletarConta");
+          setContactModal(!contactModal);
+        }}
+      >
+        Deletar
+      </StyledBtn>
     </StyledDiv>
   );
 };

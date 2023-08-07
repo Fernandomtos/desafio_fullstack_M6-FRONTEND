@@ -22,6 +22,7 @@ export const GlobalStyle = createGlobalStyle`
     --feedback-sucess: #3FE864;
     --feedback-negative: #E83F5B;
     
+    --title0: 2.0rem;
     --title1: 1.8rem;
     --title2: 1.6rem;
     --title3: 1.4rem;

@@ -25,8 +25,8 @@ export const StyledContainer = styled.main`
 `;
 
 export const StyledCardsUl = styled.ul`
-  margin-top: 10px;
   display: flex;
-  justify-content: space-between;
+  justify-content: left;
+  gap: 20px;
   flex-wrap: wrap;
 `;

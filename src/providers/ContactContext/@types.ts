@@ -11,6 +11,12 @@ export interface iContact {
   deletedAt?: Date | string | null | undefined;
 }
 
+export interface iContactUpdate {
+  name?: string;
+  email?: string;
+  fone?: string;
+}
+
 export interface iContactUserCommon {
   id: number;
   name: string;
@@ -27,12 +33,14 @@ export interface iSearchForm {
 export interface iContactContext {
   contactsAllUsers: () => Promise<void>;
   contactsUser: () => Promise<void>;
-  // contact: iContact[] | null;
   contactUser: iContact[] | null;
-  // contactUser: iContactUser[] | null;
+  updateContacts: (data: iContactUpdate) => Promise<void>;
   contactModal: boolean;
   setContactModal: React.Dispatch<React.SetStateAction<boolean>>;
   createContacts: (data: iContact) => Promise<void>;
   searchContact: iContact[] | undefined;
   setSearch: React.Dispatch<React.SetStateAction<iSearchForm | undefined>>;
+  deleteContacts: (id: number) => Promise<void>;
+  contactId: number;
+  setContactId: React.Dispatch<React.SetStateAction<number>>;
 }

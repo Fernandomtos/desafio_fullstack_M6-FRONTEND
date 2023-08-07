@@ -18,6 +18,10 @@ export const StyledDiv = styled.div`
     position: relative;
     border-radius: var(--radius-default);
 
+    :focus {
+      outline: 0;
+    }
+
     > button {
       margin: 0;
       height: 30px;

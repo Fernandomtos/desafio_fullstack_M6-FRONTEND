@@ -1,10 +1,12 @@
 import { createContext, useEffect, useState } from "react";
 import {
   errorResponse,
+  iUser,
   iUserContext,
   iUserContextProps,
   iUserDataToken,
   iUserMail,
+  iUserUpdate,
 } from "./@types";
 import { LoginData } from "../../components/FormLogin/validator";
 import api from "../../services/api";
@@ -21,6 +23,8 @@ const UserProvider = ({ children }: iUserContextProps) => {
   const [userData, setUserData] = useState<iUserDataToken | null>(null);
   const [btnInfo, setBtnInfo] = useState("");
   const [recoverModal, setRecoverModal] = useState(false);
+  const [listUsers, setListUsers] = useState<iUser[] | null>(null);
+  const [userId, setUserId] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -74,6 +78,45 @@ const UserProvider = ({ children }: iUserContextProps) => {
     navigate("/");
   };
 
+  //deletar a Conta;
+  const deleteUser = async (idUser: number) => {
+    try {
+      await api.delete(`/users/${idUser}`);
+      toast.success("Contato deletado com sucesso!");
+      if (idUser == userData?.sub) {
+        toast.warning("Logout necessário para validação das atualizações!");
+        logoutUser();
+      }
+      allUser();
+    } catch (error) {
+      toast.warning("Usuário já foi deletado!");
+      console.log(error);
+    }
+  };
+
+  //atualizar user;
+  const updateUser = async (data: iUserUpdate, idUser: number) => {
+    try {
+      await api.patch<iUser>(`/users/${idUser}`, data);
+      toast.success("Contato atualizado com sucesso!");
+      if (idUser == userData?.sub) {
+        toast.warning("Logout necessário para validação das atualizações!");
+        logoutUser();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const allUser = async () => {
+    try {
+      const response = await api.get<iUser[]>("/users");
+      setListUsers(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const recoverPassword = async (data: iUserMail) => {
     try {
       await api.post("/recoverPass", data);
@@ -100,6 +143,13 @@ const UserProvider = ({ children }: iUserContextProps) => {
         recoverPassword,
         recoverModal,
         setRecoverModal,
+        deleteUser,
+        updateUser,
+        setUserData,
+        listUsers,
+        allUser,
+        userId,
+        setUserId,
       }}
     >
       {children}
