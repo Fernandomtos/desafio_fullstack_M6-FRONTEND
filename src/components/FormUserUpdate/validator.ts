@@ -5,6 +5,7 @@ const schema = z.object({
   email: z.string().email("Deve ser um e-mail válido").or(z.literal("")),
   fone: z.string().max(20),
   password: z.string(),
+  admin: z.enum(["admin", "userCommon"]), 
 });
 
 export type UserData = z.infer<typeof schema>;

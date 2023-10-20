@@ -9,11 +9,10 @@ import { ContactContext } from "../../providers/ContactContext/ContactContext";
 import { iUserUpdate } from "../../providers/UserContext/@types";
 import { UserContext } from "../../providers/UserContext/UserContext";
 
-export const FormUserUpdate = () => {
+export const FormUserUpdate = ( ) => {
   const { contactModal, setContactModal } = useContext(ContactContext);
-  const { updateUser, userData, userId } = useContext(UserContext);
-  const { btnInfo } = useContext(UserContext);
-
+  const { updateUser, userData, userId, btnInfo, dataUserId } = useContext(UserContext);
+  
   let idUser: number | undefined = 0;
 
   if (btnInfo == "editarPerfil") {
@@ -21,8 +20,6 @@ export const FormUserUpdate = () => {
   } else {
     idUser = userId;
   }
-
-  console.log(idUser);
 
   const {
     register,
@@ -50,6 +47,10 @@ export const FormUserUpdate = () => {
     if (data.password) {
       userDataUpdate = { ...userDataUpdate, password: data.password };
     }
+
+    if (data.admin) {
+      userDataUpdate = { ...userDataUpdate, admin: data.admin };
+    }   
 
     if (Object.keys(userDataUpdate).length != 0) {
       updateUser(userDataUpdate, idUser!);
@@ -115,6 +116,34 @@ export const FormUserUpdate = () => {
             />
             <p>{errors.password?.message}</p>
           </StyledDivInput>
+          
+          <span>Tipo de Conta</span>
+          <div className="btnRole">
+            <div className="buttonRadio">
+              <input
+                type="radio"
+                id="btnAdmin"
+                value="admin"
+                defaultChecked={dataUserId?.admin === "admin" ? true : false}
+                {...register("admin")}
+              />
+              <label className="btn" htmlFor="btnAdmin">
+                Administrador
+              </label>
+            </div>
+            <div className="buttonRadio">
+              <input
+                type="radio"
+                id="btnUserCommon"
+                value="userCommon"
+                defaultChecked={dataUserId?.admin === "userCommon" ? true : false}
+                {...register("admin")}
+              />
+              <label className="btn" htmlFor="btnUserCommon">
+                Usuário
+              </label>
+            </div>
+          </div>
 
           <BtnSubmit>Atualizar</BtnSubmit>
         </form>

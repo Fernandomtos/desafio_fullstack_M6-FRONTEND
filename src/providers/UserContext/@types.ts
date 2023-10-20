@@ -18,7 +18,7 @@ export interface iUser {
   id: number;
   name: string;
   email: string;
-  admin: boolean;
+  admin: string;
   fone: string;
   createdAt: string;
   deletedAt: string;
@@ -29,10 +29,11 @@ export interface iUserUpdate {
   email?: string;
   fone?: string;
   password?: string;
+  admin?: string; 
 }
 
 export interface iUserDataToken {
-  admin: boolean;
+  admin: string;
   exp: number;
   iat: number;
   name: string;
@@ -62,4 +63,6 @@ export interface iUserContext {
   allUser: () => Promise<void>;
   userId: number;
   setUserId: React.Dispatch<React.SetStateAction<number>>;
+  readUser: (idUser: number) => Promise<void>;
+  dataUserId: iUser | null;
 }

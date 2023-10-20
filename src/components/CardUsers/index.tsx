@@ -12,10 +12,10 @@ interface iUserProps {
 
 export const CardUsers = ({ user }: iUserProps) => {
   const { contactModal, setContactModal } = useContext(ContactContext);
-  const { setBtnInfo, deleteUser, setUserId } = useContext(UserContext);
+const { setBtnInfo, deleteUser, setUserId, readUser } = useContext(UserContext);
 
   const idUser: number = user.id!;
-
+ 
   return (
     <SyledCard>
       <p>ref. {user.id}</p>
@@ -23,16 +23,27 @@ export const CardUsers = ({ user }: iUserProps) => {
       <p>E-mail: {user.email}</p>
       <p>Telefone: {user.fone}</p>
       <p>Criado em: {user.createdAt}</p>
-      <p>Deletado em: {user.deletedAt} </p>
-      <p>Usuário Admin: {user.admin}</p>
+      <p>Tipo de Conta:</p>
+      <div>
+          <div className="infoUser">
+            <p>Usuário</p>
+            {user.admin === "userCommon" ? <p>X</p> : ""}
+          </div>
+          <div className="infoUser">
+            <p>Administrador</p>
+            {user.admin === "admin" ? <p>X</p> : ""}
+          </div>
+      </div>
+      
       <div className="btnContact">
         <button onClick={() => deleteUser(idUser)}>
           <BsTrash size={25} />
         </button>
         <button
-          onClick={() => {
-            setBtnInfo("editarUser");
+          onClick={async () => {
+            await readUser(idUser);
             setUserId(idUser);
+            setBtnInfo("editarUser");
             setContactModal(!contactModal);
           }}
         >
