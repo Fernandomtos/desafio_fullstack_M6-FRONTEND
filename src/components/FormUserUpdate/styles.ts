@@ -26,6 +26,55 @@ export const StyledDiv = styled.div`
   button {
     margin-top: 30px;
   }
+
+  .btnRole {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .buttonRadio{
+    width: auto;
+  }
+
+  .buttonRadio label,
+  .buttonRadio input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 38.5px;
+    width: 160px;
+    position: relative;
+  }
+
+  .buttonRadio input[type="radio"] {
+    opacity: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+  }
+
+  .buttonRadio input[type="radio"]:checked + label {
+    color: #FDFDFD;
+    background-color: #4529E6;
+    border-radius: 2px;
+    border: none;
+  }
+
+  .buttonRadio label {
+    cursor: pointer;
+    color: #212529;
+    border: 2px solid #868E96;
+    border-radius: 2px;
+  }
+
+  span {
+    display: flex;
+    margin-top: 16.21px;
+    margin-bottom: 14px;
+    color: var(--grey-0);
+    font-size: var(--headline);
+  }
 `;
 
 export const StyledDivInput = styled.div`

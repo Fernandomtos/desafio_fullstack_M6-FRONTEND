@@ -30,4 +30,19 @@ export const SyledCard = styled.div`
       background-color: transparent;
     }
   }
+
+  > div {
+    display: flex;
+    
+    .infoUser {
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+      
+      
+      img {
+        text-align: center;
+      }
+    }
+  }
 `;

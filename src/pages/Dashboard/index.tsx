@@ -42,7 +42,7 @@ const Dashboard = () => {
         <div>
           <aside>
             <MenuUser />
-            {userData?.admin === true ? <MenuAdm /> : null}
+            {userData?.admin === "admin" ? <MenuAdm /> : null}
           </aside>
           <section>
             {btnInfo == "listarUsuarios" ? (

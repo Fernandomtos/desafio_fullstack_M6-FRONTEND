@@ -24,6 +24,7 @@ const UserProvider = ({ children }: iUserContextProps) => {
   const [btnInfo, setBtnInfo] = useState("");
   const [recoverModal, setRecoverModal] = useState(false);
   const [listUsers, setListUsers] = useState<iUser[] | null>(null);
+  const [dataUserId, setDataUserId] = useState<iUser | null>(null);
   const [userId, setUserId] = useState(0);
   const navigate = useNavigate();
 
@@ -87,12 +88,21 @@ const UserProvider = ({ children }: iUserContextProps) => {
         toast.warning("Logout necessário para validação das atualizações!");
         logoutUser();
       }
-      allUser();
     } catch (error) {
       toast.warning("Usuário já foi deletado!");
       console.log(error);
     }
   };
+
+  //listar conta por id
+  const readUser = async (idUser: number) => {
+    try {
+      const response = await api.get(`/users/${idUser}`);
+      setDataUserId(response.data)
+    } catch (error) {
+      toast.warning("Usuário não encontrado!");
+    }
+  }
 
   //atualizar user;
   const updateUser = async (data: iUserUpdate, idUser: number) => {
@@ -151,6 +161,8 @@ const UserProvider = ({ children }: iUserContextProps) => {
         allUser,
         userId,
         setUserId,
+        readUser,
+        dataUserId,
       }}
     >
       {children}
